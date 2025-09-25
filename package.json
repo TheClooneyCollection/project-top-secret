@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "demo": "node encrypt.js \"open sesame-1234\" examples/demo-secret.html dist/page.enc.json && npx @11ty/eleventy"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
