@@ -1,0 +1,38 @@
+metaTitle: Unlock the Demo Page
+hero:
+  title: Unlock the Demo Page
+  blurb: Answer the sample questions to reveal the encrypted demo content.
+cardNote: Replace these questions with your own passphrase hints.
+footerNote: Example template for passphrase-protected reveals.
+button:
+  default: Unlock
+  loading: Unlocking...
+messages:
+  missing: Please answer every question to continue.
+  incorrect: One or more answers do not match. Try again.
+  decryptError: Unable to decrypt the page. Double-check your answers or try again.
+questions:
+  - id: origin
+    label: Question #1
+    prompt: What is the sample answer?
+    description: Case insensitive; demonstrates optional alternate answers.
+    placeholder: e.g. open sesame
+    answer: open sesame
+    accept:
+      - sesame
+    caseSensitive: false
+    trimWhitespace: true
+  - id: code
+    label: Question #2
+    prompt: What is the demo code?
+    description: Numbers only – extra characters are stripped before comparison.
+    placeholder: four digits
+    answer: "1234"
+    passphraseValue: 1234
+    trimWhitespace: true
+    stripCharacters: "[^0-9]"
+passphrase:
+  order:
+    - origin
+    - code
+  joiner: "-"

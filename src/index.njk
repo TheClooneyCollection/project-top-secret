@@ -1,0 +1,490 @@
+---
+layout: null
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ unlock.metaTitle }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0b10;
+      --fg: #ffffff;
+      --muted: #b9bfd6;
+      --card: #12121aee;
+      --rose: #ff5d8f;
+      --violet: #7c6cff;
+      --radius: 24px;
+      --border: rgba(42, 42, 58, 0.65);
+      --error: #ff6d86;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 6vw, 72px);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      line-height: 1.6;
+      color: var(--fg);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, #1a1030, transparent),
+        radial-gradient(1000px 700px at 110% 10%, #0d1a2b, transparent),
+        linear-gradient(180deg, #0b0b10, #0b0b10);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(closest-side, rgba(124, 108, 255, 0.18), transparent),
+                  radial-gradient(closest-side, rgba(255, 93, 143, 0.16), transparent);
+      filter: blur(30px);
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(520px, 92vw);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      z-index: 1;
+    }
+
+    .card {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.46), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      padding: clamp(32px, 6vw, 48px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(24px, 4vw, 32px);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .heart {
+      width: 48px;
+      height: 48px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 36ch;
+    }
+
+    .unlock-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .question {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .question-label {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.86);
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .question-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .question-description {
+      margin: 0;
+      color: rgba(185, 191, 214, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="email"] {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: rgba(18, 18, 26, 0.75);
+      color: var(--fg);
+      font-size: 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    input:focus-visible {
+      outline: none;
+      border-color: rgba(124, 108, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(124, 108, 255, 0.25);
+    }
+
+    .field-error {
+      color: var(--error);
+      font-size: 0.85rem;
+      min-height: 1em;
+    }
+
+    .form-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .submit-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button[type="submit"] {
+      appearance: none;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 22px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, rgba(255, 93, 143, 0.8), rgba(124, 108, 255, 0.8));
+      color: var(--fg);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.38), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      min-width: 140px;
+    }
+
+    button[type="submit"]:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(124, 108, 255, 0.35);
+      background: linear-gradient(135deg, rgba(255, 93, 143, 0.95), rgba(124, 108, 255, 0.95));
+    }
+
+    button[type="submit"]:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    #err {
+      min-height: 1.2em;
+      color: var(--error);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .footer {
+      margin: 0;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    #content {
+      display: none;
+    }
+
+    @media (max-width: 560px) {
+      .submit-row {
+        justify-content: stretch;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <header class="hero">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="url(#unlockGradient)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <defs>
+            <linearGradient id="unlockGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="var(--rose)" />
+              <stop offset="1" stop-color="var(--violet)" />
+            </linearGradient>
+          </defs>
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+        <h1>{{ unlock.hero.title }}</h1>
+        {% if unlock.hero.blurb %}
+          <p class="muted">{{ unlock.hero.blurb }}</p>
+        {% endif %}
+      </header>
+
+      <form id="unlockForm" class="unlock-form" autocomplete="off">
+        {% for question in unlock.questions %}
+        <fieldset class="question" data-question-id="{{ question.id }}">
+          <legend class="question-label">{{ question.label }}</legend>
+          <div class="question-text">{{ question.prompt }}</div>
+          {% if question.description %}
+            <p class="question-description">{{ question.description }}</p>
+          {% endif %}
+          <div class="input-wrapper">
+            <input
+              id="{{ question.id }}"
+              name="{{ question.id }}"
+              type="{{ question.inputType or 'text' }}"
+              {% if question.inputMode %}inputmode="{{ question.inputMode }}"{% endif %}
+              placeholder="{{ question.placeholder or '' }}"
+              autocomplete="off"
+              data-question-input
+            />
+            <div class="field-error" data-error-for="{{ question.id }}"></div>
+          </div>
+        </fieldset>
+        {% endfor %}
+
+        <p class="muted">{{ unlock.cardNote }}</p>
+
+        <div class="form-footer">
+          <div id="err" role="alert" aria-live="polite"></div>
+          <div class="submit-row">
+            <button id="go" type="submit">{{ unlock.button.default }}</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="content">...locked...</div>
+    </section>
+
+    {% if unlock.footerNote %}
+      <footer class="footer muted">{{ unlock.footerNote }}</footer>
+    {% endif %}
+  </main>
+
+  <script>
+  const unlockConfig = {{ unlock | dump | safe }};
+
+  async function b64(s) {
+    return Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  }
+
+  async function importKeyPBKDF2(pw) {
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  }
+
+  async function deriveAESKey(pwKey, salt) {
+    return crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: 200000, hash: "SHA-256" },
+      pwKey,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["decrypt"]
+    );
+  }
+
+  async function tryDecrypt(pw) {
+    const resp = await fetch("page.enc.json", { cache: "no-store" });
+    if (!resp.ok) {
+      throw new Error("Failed to fetch encrypted content");
+    }
+
+    const j = await resp.json();
+    const pwKey = await importKeyPBKDF2(pw);
+    const key = await deriveAESKey(pwKey, await b64(j.salt));
+    const ct = await b64(j.ct);
+    const iv = await b64(j.iv);
+    const tag = await b64(j.tag);
+    const combined = new Uint8Array(ct.length + tag.length);
+    combined.set(ct, 0);
+    combined.set(tag, ct.length);
+
+    const ptBuf = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, combined);
+    return new TextDecoder().decode(ptBuf);
+  }
+
+  function normalize(value, options = {}) {
+    let output = value;
+    if (options.trimWhitespace !== false) {
+      output = output.trim().replace(/\s+/g, " ");
+    }
+    if (!options.caseSensitive) {
+      output = output.toLocaleLowerCase();
+    }
+    if (options.stripCharacters) {
+      const pattern = new RegExp(options.stripCharacters, "g");
+      output = output.replace(pattern, "");
+    }
+    return output;
+  }
+
+  function buildQuestionIndex(config) {
+    const map = new Map();
+    for (const question of config.questions) {
+      if (!question.id) {
+        continue;
+      }
+      const acceptable = [question.answer, ...(question.accept || [])]
+        .filter(Boolean)
+        .map((value) => normalize(String(value), question));
+      const canonical = String(question.answer ?? "");
+      map.set(question.id, {
+        config: question,
+        acceptable,
+        canonical,
+        normalizedCanonical: normalize(canonical, question)
+      });
+    }
+    return map;
+  }
+
+  function buildPassphrase(questionMap, config) {
+    const order = (config.passphrase && config.passphrase.order && config.passphrase.order.length)
+      ? config.passphrase.order
+      : Array.from(questionMap.keys());
+    const joiner = (config.passphrase && typeof config.passphrase.joiner === "string")
+      ? config.passphrase.joiner
+      : "";
+    return order
+      .map((id) => {
+        const entry = questionMap.get(id);
+        if (!entry) {
+          return "";
+        }
+        const q = entry.config;
+        return typeof q.passphraseValue === "string" && q.passphraseValue.length > 0
+          ? q.passphraseValue
+          : entry.canonical;
+      })
+      .join(joiner);
+  }
+
+  const form = document.getElementById("unlockForm");
+  const goBtn = document.getElementById("go");
+  const err = document.getElementById("err");
+  const defaultButtonText = goBtn ? goBtn.textContent : "Unlock";
+  const questionMap = buildQuestionIndex(unlockConfig);
+
+  const fieldErrors = new Map();
+  document.querySelectorAll("[data-error-for]").forEach((node) => {
+    fieldErrors.set(node.getAttribute("data-error-for"), node);
+  });
+
+  const focusableInputs = Array.from(document.querySelectorAll("[data-question-input]"));
+  if (focusableInputs.length) {
+    focusableInputs[0].focus();
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    err.textContent = "";
+    fieldErrors.forEach((node) => {
+      node.textContent = "";
+    });
+
+    for (const input of focusableInputs) {
+      const id = input.name;
+      const value = input.value;
+      const entry = questionMap.get(id);
+
+      if (!entry) {
+        continue;
+      }
+
+      const normalizedValue = normalize(String(value), entry.config);
+
+      if (!normalizedValue) {
+        const errorNode = fieldErrors.get(id);
+        if (errorNode) {
+          errorNode.textContent = unlockConfig.messages?.missing || "This field is required.";
+        }
+        input.focus();
+        return;
+      }
+
+      const isMatch = entry.acceptable.some((candidate) => candidate === normalizedValue);
+      if (!isMatch) {
+        const errorNode = fieldErrors.get(id);
+        if (errorNode) {
+          errorNode.textContent = unlockConfig.messages?.incorrect || "That answer doesn't look right.";
+        }
+        input.focus();
+        return;
+      }
+
+    }
+
+    if (goBtn) {
+      goBtn.disabled = true;
+      goBtn.textContent = unlockConfig.button?.loading || "Unlocking...";
+      goBtn.setAttribute("aria-busy", "true");
+    }
+
+    try {
+      const passphrase = buildPassphrase(questionMap, unlockConfig);
+      const html = await tryDecrypt(passphrase);
+      document.open("text/html", "replace");
+      document.write(html);
+      document.close();
+    } catch (e) {
+      err.textContent = unlockConfig.messages?.decryptError || "Unable to unlock the page.";
+    } finally {
+      if (goBtn) {
+        goBtn.disabled = false;
+        goBtn.textContent = defaultButtonText;
+        goBtn.removeAttribute("aria-busy");
+      }
+    }
+  });
+  </script>
+</body>
+</html>

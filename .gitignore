@@ -1,0 +1,6 @@
+page.enc.json
+/assets/
+.DS_Store
+
+node_modules/
+dist/

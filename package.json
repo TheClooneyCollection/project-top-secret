@@ -1,0 +1,15 @@
+{
+  "name": "eleventy-passphrase-gate",
+  "description": "Eleventy template for passphrase-gated reveals backed by WebCrypto.",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "yaml": "^2.5.0"
+  }
+}
