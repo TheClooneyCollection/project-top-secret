@@ -5,7 +5,6 @@ A starter template for Eleventy projects that reveal their real content only aft
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/190e0b04-55ab-4dfd-a4a5-7eb3bd1a174a" />
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/88a4fa92-5026-41e7-b58d-ad56e27e0384" />
 
-
 ## What You Get
 - Lock screen rendered from `src/index.njk`, fully customizable through data and styles.
 - Client-side unlock flow that fetches `page.enc.json`, derives a key with PBKDF2, and swaps in the decrypted markup.
@@ -23,22 +22,22 @@ Install dependencies:
 npm install
 ```
 
-## Customize the Secret Page
-1. Open `examples/demo-secret.html` and replace the placeholder content with your private message.
-2. Keep an unencrypted copy somewhere safe—you need it whenever you regenerate the encrypted payload.
-
-## Encrypt Your Content
-Use the Node encryptor after finalizing your passphrase answers:
+## Prepare & Encrypt Your Secret Page
+Encrypt your content with the same passphrase your questions assemble:
+```bash
+node encrypt.js "<answer-1>-<answer-2>" <path-to-your-html-file> dist/page.enc.json
+```
+Example using the sample questions and demo page:
 ```bash
 node encrypt.js "open sesame-1234" examples/demo-secret.html dist/page.enc.json
 ```
-The command arguments are `password` (the exact passphrase string readers must assemble), `input` (your HTML file), and optional `output`. Run it any time the secret page changes so `dist/page.enc.json` stays current before building or serving.
+Arguments are `password` (the exact passphrase string readers must assemble), `input` (your HTML file), and optional `output`. Re-run the command whenever the secret page changes so `dist/page.enc.json` stays current before you build or serve the site.
 
 ## Build & Preview
-1. Ensure `dist/page.enc.json` is up to date from the previous step.
+1. Make sure `dist/page.enc.json` is up to date from the previous step.
 2. Run Eleventy in dev/watch mode:
    ```bash
-      npm run dev
+   npm run dev
    ```
    Edit files in `src/` or `src/_data/` to see live reloads of the lock screen.
 
