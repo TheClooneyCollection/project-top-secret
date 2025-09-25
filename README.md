@@ -5,6 +5,10 @@ A starter template for Eleventy projects that reveal their real content only aft
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/190e0b04-55ab-4dfd-a4a5-7eb3bd1a174a" />
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/88a4fa92-5026-41e7-b58d-ad56e27e0384" />
 
+You can find the demo here.
+
+https://project-top-secret.pages.dev/
+
 ## What You Get
 - Lock screen rendered from `src/index.njk`, fully customizable through data and styles.
 - Client-side unlock flow that fetches `page.enc.json`, derives a key with PBKDF2, and swaps in the decrypted markup.
