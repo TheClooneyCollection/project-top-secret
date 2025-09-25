@@ -1,4 +1,4 @@
-# Eleventy Passphrase Gate
+# Project Top Secret - Eleventy Passphrase Gate
 
 A starter template for Eleventy projects that reveal their real content only after visitors solve custom questions. Correct answers combine into a passphrase that decrypts an encrypted HTML payload in the browser via WebCrypto.
 
